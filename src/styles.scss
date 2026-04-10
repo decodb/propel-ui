@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@use '../src/styles/index';
+@use '../src/styles/index' as colors;
 
 * {
   margin: 0;
@@ -9,4 +9,6 @@
 
 body {
   font-family: "Poppins", sans-serif;
+  color: colors.$color-surface;
+  background-color: colors.$color-background;
 }
