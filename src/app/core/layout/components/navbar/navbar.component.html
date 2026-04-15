@@ -1,1 +1,10 @@
-<p>navbar works!</p>
+<nav [class.scrolled]="isScrolled()">
+    <div class="logo">
+        <img src="assets/images/logo.png" alt="logo">
+        <p>Pro<span>p</span>el</p>
+    </div>
+    <div class="btn btn-secondary" [class.show]="isScrolled()">
+        <span>Sign up</span>
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+    </div>
+</nav>

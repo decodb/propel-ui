@@ -1,0 +1,517 @@
+@use '../../../../../../styles/index' as *;
+
+#hero {
+    height: 90vh;
+
+    justify-content: space-between;
+    align-items: center;
+
+    @include md {
+        height: auto;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 7.5rem 1rem 0 1rem;
+
+        & > *:nth-child(1) {
+            order: 2;
+        }
+
+        & > *:nth-child(2) {
+            order: 1;
+        }
+    }
+
+    @include sm {}
+
+    .left {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        @include sm {
+            gap: 1rem;
+        }
+
+        h2, h3 {
+            font-size: 2.75rem;
+
+            @include sm {
+                font-size: 2.25rem;
+                text-align: center;
+            }
+        }
+
+        h2 {
+            font-weight: 400;
+            line-height: 0.5;
+        }
+
+        h3 {
+            color: $color-primary;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        p {
+            font-size: 0.9rem;
+            width: 75%;
+
+            @include sm {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @include md {
+            align-items: center;
+        }
+
+        .teams {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            .circles {
+                display: flex;
+                align-items: center;
+                gap: -0.5rem;
+
+                .circle {
+                    font-size: 0.85rem;
+
+                    height: 2rem;
+                    width: 2rem;
+                    border-radius: 50%;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    padding: 0.2rem;
+                }
+
+                .circle:nth-child(1),
+                .circle:nth-child(3) {
+                    background-color: black;
+                }
+
+                .circle:nth-child(2) {
+                    background-color: grey;
+                }
+
+                .circle:nth-child(4) {
+                    background-color: $color-primary;
+                }
+            }
+
+            p {
+                font-size: 0.75rem;
+
+                span {
+                    color: $color-muted;
+                }
+            }
+        }
+    }
+}
+
+#promote {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+    @include md {
+        padding: 2.5rem;
+    }
+
+    @include sm {
+        padding: 2.5rem 1rem;
+    }
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        text-align: center;
+
+        .board {
+            background-color: $color-primary-dark;
+            border: 2px solid $color-primary;
+            border-radius: 25px;
+
+            width: max-content;
+            padding: 0.25rem 0.5rem;
+            
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            span {
+                font-size: 0.75rem;
+            }
+        }
+
+        h3 {
+
+            span {
+                color: $color-primary;
+            }
+
+        }
+
+        p {
+            color: $color-muted;
+            font-size: 0.85rem;
+        }
+
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+
+        @include xl {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @include md {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include sm {
+            grid-template-columns: 1fr;
+        }
+
+        .card {
+            background-color: $color-primary-dark;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            padding: 1rem;
+
+            border: 1.5px solid $color-muted;
+            border-radius: 10px;
+
+            transition: all 0.3s ease;
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+            &:hover {
+                transform: translateY(-6px) scale(1.02);
+
+                border-color: $color-primary;
+                box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.35),
+                0 0 12px rgba($color-primary, 0.5);
+
+                cursor: pointer;
+            }
+
+            &:active {
+                transform: translateY(-2px) scale(0.98);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+            }
+
+            @include sm {
+                align-items: center;
+                text-align: center;
+            }
+
+            .card_header {
+                
+                @include sm {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .icon {
+                    background-color: #482380;
+                    padding: 5px;
+                    width: max-content;
+                    border-radius: 5px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    ion-icon {
+                        color: $color-primary;
+                    }
+                }
+
+                span {
+                    font-size: 0.85rem;
+                    color: $color-primary;
+                }
+
+            }
+
+            p.text {
+                font-size: 0.7rem;
+                color: $color-muted;
+            }
+
+            &:nth-child(2) {
+                .card_header {
+                    .icon {
+                        background-color: #6EC0FC1A;
+
+                        ion-icon {
+                            color: #6EC0FC;
+                        }
+                    }
+
+                    span {
+                        color: #6EC0FC;
+                    }
+                }
+            }
+
+            &:nth-child(3) {
+                .card_header {
+                    .icon {
+                        background-color: #FBBF241A;
+
+                        ion-icon {
+                            color: #FDE68A;
+                        }
+                    }
+
+                    span {
+                        color: #FDE68A;
+                    }
+                }
+            }
+
+            &:nth-child(4) {
+                .card_header {
+                    .icon {
+                        background-color: #34D3991A;
+
+                        ion-icon {
+                            color: #86EFAC;
+                        }
+                    }
+
+                    span {
+                        color: #86EFAC;
+                    }
+                }
+            }
+
+            &:nth-child(5) {
+                .card_header {
+                    .icon {
+                        background-color: #F472B61A;
+
+                        ion-icon {
+                            color: #F9A8D4;
+                        }
+                    }
+
+                    span {
+                        color: #F9A8D4;
+                    }
+                }
+            }
+
+            &:nth-child(6) {
+                .card_header {
+                    .icon {
+                        background-color: #7C3AED26;
+
+                        ion-icon {
+                            color: #C4B5FD;
+                        }
+                    }
+
+                    span {
+                        color: #C4B5FD;
+                    }
+                }
+            }
+
+            &:nth-child(7) {
+                .card_header {
+                    .icon {
+                        background-color: #FB923C1A;
+
+                        ion-icon {
+                            color: #FDBA74;
+                        }
+                    }
+
+                    span {
+                        color: #FDBA74;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#faq {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+    @include md {
+        padding: 1rem;
+    }
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        text-align: center;
+
+        .board {
+            background-color: $color-primary-dark;
+            border: 2px solid $color-primary;
+            border-radius: 25px;
+
+            width: max-content;
+            padding: 0.25rem 0.5rem;
+            
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            span {
+                font-size: 0.75rem;
+            }
+        }
+
+        h3 {
+
+            span {
+                color: $color-primary;
+            }
+
+        }
+
+        p {
+            color: $color-muted;
+            font-size: 0.85rem;
+        }
+
+    }
+
+    #accordion {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 37.5rem;
+
+        li {
+            width: 100%;
+            margin-bottom: 0.25rem;
+
+            &:hover label span {
+                background-color: $color-primary;
+            }
+
+            &:has(input[type="radio"]:checked) label {
+                border-bottom-color: $color-primary;
+            }
+
+            &:has(input[type="radio"]:checked) label span {
+                background-color: $color-primary;
+            }
+
+            label {
+                padding: 0.75rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-weight: 400;
+                cursor: pointer;
+                border-bottom: 0.25px solid $color-surface;
+                width: 100%;
+
+                @include sm {
+                    font-size: 0.75rem;
+                }
+
+                span {
+                    position: relative;
+                    transform: rotate(90deg);
+                    font-size: 1.25rem;
+                    width: 1rem;
+                    height: 1rem;
+                    padding: 5px;
+                    border-radius: 5px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-shrink: 0;
+
+                    transition: background-color 0.3s ease;
+
+                    &::before,
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        width: 70%;
+                        height: 2px;
+                        background-color: $color-surface;
+                        transform-origin: center;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    &::before {
+                        transform: translate(-50%, -50%) rotate(0deg);
+                    }
+
+                    &::after {
+                        transform: translate(-50%, -50%) rotate(90deg);
+                    }
+                }
+
+                & + input[type="radio"] {
+                    display: none;
+                }
+
+                & + input[type="radio"]:checked + .content {
+                    max-height: 400px;
+                }
+            }
+
+            @include md {
+                width: 100%;
+
+                label {
+                    padding: 0.5rem;
+
+                    span {
+                        width: 1rem;
+                        height: 1rem;
+                        flex-shrink: 0;
+                    }
+                }
+            }
+        }
+
+        .content {
+            width: 100%;
+            padding: 0 0.75rem;
+            line-height: 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s;
+
+            p {
+                padding: 0.5rem 0;
+                font-size: 0.85rem;
+                color: $color-muted;
+            }
+        }
+    }
+
+}
