@@ -17,6 +17,8 @@ section {
 .btn {
   background-color: $color-primary;
   font-size: 0.9rem;
+  color: #fff; // or appropriate contrast color
+  border: none;
 
   display: flex;
   justify-content: space-between;
@@ -36,6 +38,11 @@ section {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
   }
 
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
   &:active {
     transform: translateY(-1px);
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
@@ -45,4 +52,5 @@ section {
 .btn-secondary {
   background-color: transparent;
   border: 1.5px solid $color-surface;
+  color: $color-surface;
 }

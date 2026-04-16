@@ -23,11 +23,11 @@ footer {
     }
 
     a {
-        &:hover {
+        &:hover,
+        &:focus {
             color: $color-surface;
         }
     }
-
     div {
         display: flex;
         align-items: center;
