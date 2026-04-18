@@ -25,6 +25,11 @@ export class SignUpComponent {
     this.isDragging = true;
   }
 
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragging = false;
+  }
+  
   onDrop(event: DragEvent): void {
     event.preventDefault();
     this.isDragging = false;

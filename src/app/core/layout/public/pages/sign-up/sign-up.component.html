@@ -50,13 +50,13 @@
                         <div class="field">
                             <label for="name">Name <span>*</span></label>
                             <div class="input">
-                                <input type="text" placeholder="eg. Propel">
+                                <input id="name" type="text" placeholder="eg. Propel">
                             </div>
                         </div>
                         <div class="field">
                             <label for="industry">Industry <span>*</span></label>
                             <div class="input">
-                                <input type="text" placeholder="IT and Software">
+                                <input id="industry" type="text" placeholder="IT and Software">
                             </div>
                         </div>
                     </div>
@@ -64,13 +64,13 @@
                         <div class="field">
                             <label for="phone">Phone <span>*</span></label>
                             <div class="input">
-                                <input type="text" placeholder="eg. +27 084 048 4407">
+                                <input id="number" type="text" placeholder="eg. +27 084 048 4407">
                             </div>
                         </div>
                         <div class="field">
                             <label for="Website">Website</label>
                             <div class="input">
-                                <input type="text" placeholder="eg. propel.co.za">
+                                <input id="website" type="text" placeholder="eg. propel.co.za">
                             </div>
                         </div>
                     </div>
@@ -118,26 +118,26 @@
                         <div class="field">
                             <label for="phone">First name <span>*</span></label>
                             <div class="input">
-                                <input type="text" placeholder="eg. Boitumelo">
+                                <input id="first_name" type="text" placeholder="eg. Boitumelo">
                             </div>
                         </div>
                         <div class="field">
                             <label for="last_name">Last name</label>
                             <div class="input">
-                                <input type="text" placeholder="eg. Mkhwanazi">
+                                <input id="last_name" type="text" placeholder="eg. Mkhwanazi">
                             </div>
                         </div>
                     </div>
                     <div class="field">
-                        <label for="email">Email</label>
+                        <label for="email">Email <span>*</span></label>
                         <div class="input">
-                            <input type="text" placeholder="eg. b_mkwanazi@icloud.com">
+                            <input id="email" type="email" placeholder="eg. b_mkwanazi@icloud.com">
                         </div>
                     </div>
                     <div class="field">
                         <label for="password">Password</label>
                         <div class="input">
-                            <input [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password">
+                            <input id="password" [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password">
                             @if(showPassword()) {
                                 <ion-icon name="eye-outline" (click)="togglePassword()"></ion-icon>
                             } @else {
@@ -148,7 +148,7 @@
                     <div class="field">
                         <label for="confirm_password">Confirm Password</label>
                         <div class="input">
-                            <input [type]="showPassword() ? 'text' : 'password'" placeholder="Confirm your password">
+                            <input id="confirm_password" [type]="showPassword() ? 'text' : 'password'" placeholder="Confirm your password">
                             @if(showPassword()) {
                                 <ion-icon name="eye-outline" (click)="togglePassword()"></ion-icon>
                             } @else {
