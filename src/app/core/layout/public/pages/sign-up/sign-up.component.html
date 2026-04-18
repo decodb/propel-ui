@@ -1,1 +1,167 @@
-<p>sign-up works!</p>
+<section>
+    <div class="left">
+        <div class="content">
+            <div class="onboarding">
+                <div class="logo">
+                    <img src="assets/images/logo.png" alt="logo">
+                    <p>Pro<span>p</span>el</p>
+                </div>
+                <h4>Get Started With Us</h4>
+                <p class="complete">Complete these easy steps to register your company. </p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="number">
+                        <span>1</span>
+                    </div>
+                    <p>Enter your company details</p>
+                </div>
+                <div class="step">
+                    <div class="number">
+                        <span>2</span>
+                    </div>
+                    <p>Enter the admin details</p>
+                </div>
+                <div class="step">
+                    <div class="number">
+                        <span>3</span>
+                    </div>
+                    <p>Confirm your email address</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        <div class="nav">
+            <a routerLink="/" class="btn btn-secondary"><ion-icon name="arrow-back-outline"></ion-icon> Go back</a>
+        </div>
+        <div class="top">
+            <h3>Sign Up</h3>
+            <p>Fill in the required information to get started. </p>
+        </div>
+        <form>
+            <div class="company_details">
+                <div class="header">
+                    <ion-icon name="business-outline"></ion-icon>
+                    <span>Company Information</span>
+                </div>
+                <div class="fields">
+                    <div class="row">
+                        <div class="field">
+                            <label for="name">Name <span>*</span></label>
+                            <div class="input">
+                                <input type="text" placeholder="eg. Propel">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="industry">Industry <span>*</span></label>
+                            <div class="input">
+                                <input type="text" placeholder="IT and Software">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="field">
+                            <label for="phone">Phone <span>*</span></label>
+                            <div class="input">
+                                <input type="text" placeholder="eg. +27 084 048 4407">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="Website">Website</label>
+                            <div class="input">
+                                <input type="text" placeholder="eg. propel.co.za">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="file">
+                            <label>Resume <span class="required">*</span></label>
+                            <div
+                                class="dropzone"
+                                [class.drag-over]="isDragging"
+                                [class.has-file]="selectedFile"
+                                (click)="fileInput.click()"
+                                (dragover)="onDragOver($event)"
+                                (dragleave)="isDragging = false"
+                                (drop)="onDrop($event)">
+
+                                <input #fileInput type="file"
+                                    style="display:none"
+                                    accept=".pdf,.doc,.docx"
+                                    (change)="onFileSelected($event)">
+
+                                @if(!selectedFile) {
+                                    <ion-icon name="cloud-upload-outline"></ion-icon>
+                                    Click to upload or drag and drop an image logo here
+                                }
+
+                                @if(selectedFile) {
+                                    <p>{{ selectedFile.name }}</p>
+                                    <ion-icon
+                                        name="trash-bin-outline"
+                                        (click)="removeFile($event)">
+                                    </ion-icon>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="admin_details">
+                <div class="header">
+                    <ion-icon name="person-outline"></ion-icon>
+                    <span>Admin Information</span>
+                </div>
+                <div class="fields">
+                    <div class="row">
+                        <div class="field">
+                            <label for="phone">First name <span>*</span></label>
+                            <div class="input">
+                                <input type="text" placeholder="eg. Boitumelo">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="last_name">Last name</label>
+                            <div class="input">
+                                <input type="text" placeholder="eg. Mkhwanazi">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <div class="input">
+                            <input type="text" placeholder="eg. b_mkwanazi@icloud.com">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <div class="input">
+                            <input [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password">
+                            @if(showPassword()) {
+                                <ion-icon name="eye-outline" (click)="togglePassword()"></ion-icon>
+                            } @else {
+                                <ion-icon name="eye-off-outline" (click)="togglePassword()"></ion-icon>
+                            }
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="confirm_password">Confirm Password</label>
+                        <div class="input">
+                            <input [type]="showPassword() ? 'text' : 'password'" placeholder="Confirm your password">
+                            @if(showPassword()) {
+                                <ion-icon name="eye-outline" (click)="togglePassword()"></ion-icon>
+                            } @else {
+                                <ion-icon name="eye-off-outline" (click)="togglePassword()"></ion-icon>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button">
+                <button class="btn">Sign Up</button>
+                <p>Already have an account? <a routerLink="/sign-in">Log in</a></p>
+            </div>
+        </form>
+    </div>
+</section>

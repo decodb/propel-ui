@@ -82,3 +82,41 @@ img {
     width: 100%;
   }
 }
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+label {
+  font-size: 0.75rem;
+
+  span {
+    color: $color-primary;
+  }
+}
+
+input {
+  background-color: $color-primary-dark;
+  color: $color-muted;
+  border: none;
+  width: 90%;
+
+  &:focus {
+    outline: none;
+    box-shadow: none; 
+  }
+}
+
+.input {
+  background-color: $color-primary-dark;
+  padding: 0.85rem 1rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  border-radius: 10px;
+}

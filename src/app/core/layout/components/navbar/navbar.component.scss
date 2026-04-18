@@ -17,6 +17,8 @@ nav {
     transition: all 0.3s ease;
 
     &.scrolled {
+        background-color: rgba($color-background, 0.7);
+        
         top: 10px;
         left: 4rem;
         right: 4rem;
@@ -24,15 +26,14 @@ nav {
 
         justify-content: space-between;
 
-        background-color: rgba($color-background, 0.7); // Fallback for unsupported browsers
+        border: 1px solid rgba($color-background, 0.2);        
+        border-radius: 15px;
         
         @supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
             background-color: rgba($color-background, 0.15);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
-        
-        border: 1px solid rgba($color-background, 0.2);        border-radius: 15px;
 
         @include lg {
             left: 2.5rem;
