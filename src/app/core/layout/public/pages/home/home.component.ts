@@ -98,9 +98,10 @@ export class HomeComponent {
   }
 
   onPIntersection(isVisible: boolean) {
-    this.promoteSectionElements.p = isVisible
+    if (isVisible) {
+      this.promoteSectionElements.p = isVisible;
+    }
   }
-
   onCard1Intersecting (isVisible: boolean) {
     if (isVisible) {
       this.promoteSectionElements.card1 = isVisible
@@ -157,7 +158,8 @@ export class HomeComponent {
   }
 
   onFaqPIntersection(isVisible: boolean) {
-    this.faqSectionElements.p = isVisible
-  }
-  
+    if (isVisible) {
+      this.faqSectionElements.p = isVisible;
+    }
+  }  
 }

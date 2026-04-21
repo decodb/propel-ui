@@ -21,8 +21,7 @@
             <p class="second" [class.scaledIn]="heroSectionElements.p2">2 400+ teams <span>already <br> propelling forward</span></p>
         </div>
     </div>
-    <img appIntersectionObserver [threshold]="1" (intersecting)="onImageIntersect($event)" src="assets/images/dashboard.png" alt="dashboard" [class.scaledIn]="heroSectionElements.img">
-</section>
+    <img appIntersectionObserver [threshold]="0.3" (intersecting)="onImageIntersect($event)" src="assets/images/dashboard.png" alt="dashboard" [class.scaledIn]="heroSectionElements.img"></section>
 
 <section id="promote">
     <div class="header">
@@ -109,7 +108,7 @@
 
 <section id="faq">
     <div class="header" >
-        <div class="board"appIntersectionObserver [threshold]="1" (intersecting)="onFaqSpanIntersection($event)">
+        <div class="board" appIntersectionObserver [threshold]="1" (intersecting)="onFaqSpanIntersection($event)">            
             <ion-icon name="help-circle-outline" class="el" [class.scaledIn]="faqSectionElements.span"></ion-icon>
             <span class="el" [class.scaledIn]="faqSectionElements.span">FAQ</span>
         </div>
