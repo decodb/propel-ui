@@ -1,9 +1,10 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Output, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
+import { IntersectionObserverDirective } from "../../../../../shared/directives/intersection-observer.directive";
 
 @Component({
   selector: 'app-sign-up',
-  imports: [RouterLink],
+  imports: [RouterLink, IntersectionObserverDirective],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss'
@@ -49,5 +50,42 @@ export class SignUpComponent {
 
   togglePassword() {
     this.showPassword.set(!this.showPassword())
+  }
+
+  // Intersection Observer
+  companyFields = {
+    name: false,
+    industry: false,
+    phone: false,
+    website: false,
+    image: false
+  }
+
+  adminDetails = {
+    firstName: false,
+    lastName: false,
+    email: false,
+    password: false,
+    confirmPassword: false
+  }
+
+  onCompanyDetailsIntersection(isVisible: boolean) {
+    if (isVisible) {
+      setTimeout(() => { this.companyFields.name = true; }, 500);
+      setTimeout(() => { this.companyFields.industry = true; }, 1000);
+      setTimeout(() => { this.companyFields.phone = true; }, 1500);
+      setTimeout(() => { this.companyFields.website = true; }, 2000);
+      setTimeout(() => { this.companyFields.image = true; }, 2500);
+    }
+  }
+
+  onAdminDetailsIntersection(isVisible: boolean) {
+    if (isVisible) {
+      setTimeout(() => { this.adminDetails.firstName = true; }, 500);
+      setTimeout(() => { this.adminDetails.lastName = true; }, 1000);
+      setTimeout(() => { this.adminDetails.email = true; }, 1500);
+      setTimeout(() => { this.adminDetails.password = true; }, 2000);
+      setTimeout(() => { this.adminDetails.confirmPassword = true; }, 2500);
+    }
   }
 }

@@ -2,48 +2,49 @@
 
 <section id="hero">
     <div class="left">
-        <div class="header">
-            <h2>Ship Projects</h2>
-            <h3>Not excuses</h3>
+        <div class="header" appIntersectionObserver [threshold]="1" (intersecting)="onHeroHeaderIntersection($event)">
+            <h2 [class.scaledIn]="heroSectionElements.h2">Ship Projects</h2>
+            <h3 [class.scaledIn]="heroSectionElements.h3">Not excuses</h3>
         </div>
-        <p>Propel brings your team's projects, tasks, and conversations into one focused workspace — so nothing falls through the cracks and everyone stays in motion.</p>
-        <a routerLink="/sign-up" class="btn">
+        <p appIntersectionObserver [threshold]="1" (intersecting)="onParagraphIntersection($event)" class="first" [class.scaledIn]="heroSectionElements.p1">Propel brings your team's projects, tasks, and conversations into one focused workspace — so nothing falls through the cracks and everyone stays in motion.</p>
+        <a routerLink="/sign-up" appIntersectionObserver [threshold]="1" (intersecting)="onButtonIntersect($event)" class="btn" [class.scaledIn]="heroSectionElements.a">
             <span>Get started for free</span>
             <ion-icon name="arrow-forward-outline"></ion-icon>
         </a>
-        <div class="teams">
+        <div appIntersectionObserver [threshold]="1" (intersecting)="onTeamsIntersect($event)" class="teams">
             <div class="circles">
-                <div class="circle">BM</div>
-                <div class="circle">LK</div>
-                <div class="circle">ZB</div>
-                <div class="circle">NN</div>
+                <div class="circle" [class.scaledIn]="heroSectionElements.div1">BM</div>
+                <div class="circle" [class.scaledIn]="heroSectionElements.div2">LK</div>
+                <div class="circle" [class.scaledIn]="heroSectionElements.div3">ZB</div>
+                <div class="circle" [class.scaledIn]="heroSectionElements.div4">NN</div>
             </div>
-            <p>2 400+ teams <span>already <br> propelling forward</span></p>
+            <p class="second" [class.scaledIn]="heroSectionElements.p2">2 400+ teams <span>already <br> propelling forward</span></p>
         </div>
     </div>
-    <img src="assets/images/dashboard.png" alt="dashboard">
+    <img appIntersectionObserver [threshold]="1" (intersecting)="onImageIntersect($event)" src="assets/images/dashboard.png" alt="dashboard" [class.scaledIn]="heroSectionElements.img">
 </section>
 
 <section id="promote">
     <div class="header">
-        <div class="board">
-            <ion-icon name="git-network-outline"></ion-icon>
-            <span>EVERYTHING YOU NEED</span>
+        <div class="board" appIntersectionObserver [threshold]="1" (intersecting)="onSpanIntersection($event)" >
+            <ion-icon name="git-network-outline" class="el" [class.scaledIn]="promoteSectionElements.span"></ion-icon>
+            <span class="el" [class.scaledIn]="promoteSectionElements.span">EVERYTHING YOU NEED</span>
         </div>
-        <h3>Built for teams that <span>mean</span> business</h3>
-        <p>Every feature in Propel is designed around one goal — keeping your team aligned and your projects moving.</p>
+        <h3 appIntersectionObserver [threshold]="1" (intersecting)="onH3Intersection($event)" class="el" [class.scaledIn]="promoteSectionElements.h3">Built for teams that <span>mean</span> business</h3>
+        <p appIntersectionObserver [threshold]="1" (intersecting)="onPIntersection($event)" class="el" [class.scaledIn]="promoteSectionElements.p">Every feature in Propel is designed around one goal — keeping your team aligned and your projects moving.</p>
     </div>
     <div class="cards">
-        <div class="card">
+        <div class="card el" appIntersectionObserver [threshold]="0.7" (intersecting)="onCard1Intersecting($event)"[class.scaledIn]="promoteSectionElements.card1">
             <div class="card_header">
                 <div class="icon">
                     <ion-icon name="notifications-outline"></ion-icon>
-                </div>                <span>TASKS</span>
+                </div>                
+                <span>TASKS</span>
             </div>
             <p>Assign. Track. Deliver. </p>
             <p class="text">Team leads assign tasks directly to devs with priorities, deadlines, and context — all in one place.</p>
         </div>
-        <div class="card">
+        <div class="card el" appIntersectionObserver [threshold]="0.7" (intersecting)="onCard2Intersecting($event)" [class.scaledIn]="promoteSectionElements.card2">
             <div class="card_header">
                 <div class="icon">
                     <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
@@ -51,8 +52,9 @@
                 <span>MESSAGING</span>
             </div>
             <p>Real-time chat, zero noise</p>
-            <p class="text">Communicate with your team in real-time without the clutter of endless email chains or scattered threads.</p>        </div>
-        <div class="card">
+            <p class="text">Communicate with your team in real-time without the clutter of endless email chains or scattered threads.</p>        
+        </div>
+        <div class="card el" appIntersectionObserver [threshold]="0.7" (intersecting)="onCard3Intersecting($event)" [class.scaledIn]="promoteSectionElements.card3">
             <div class="card_header">
                 <div class="icon">
                     <ion-icon name="notifications-outline"></ion-icon>
@@ -62,7 +64,7 @@
             <p>Always in the loop</p>
             <p class="text">Get notified on task updates, comments, and mentions the moment they happen.</p>
         </div>
-        <div class="card">
+        <div class="card el" appIntersectionObserver [threshold]="0.7" (intersecting)="onCard4Intersecting($event)" [class.scaledIn]="promoteSectionElements.card4">
             <div class="card_header">
                 <div class="icon">
                     <ion-icon name="bar-chart-outline"></ion-icon>
@@ -72,7 +74,7 @@
             <p>Track every project. </p>
             <p class="text">Organize and manage all projects in one place with clear structure, progress tracking, and ownership visibility.</p>
         </div>
-        <div class="card">
+        <div class="card el" appIntersectionObserver [threshold]="0.7" (intersecting)="onCard5Intersecting($event)" [class.scaledIn]="promoteSectionElements.card5">
             <div class="card_header">
                 <div class="icon">
                     <ion-icon name="people-outline"></ion-icon>
@@ -82,7 +84,7 @@
             <p>Your whole team, one workspace. </p>
             <p class="text">Collaborate with your team members efficiently, assign roles, and keep everyone aligned on shared goals. </p>
         </div>
-        <div class="card">
+        <div class="card el" appIntersectionObserver [threshold]="0.7" (intersecting)="onCard6Intersecting($event)" [class.scaledIn]="promoteSectionElements.card6">
             <div class="card_header">
                 <div class="icon">
                     <ion-icon name="lock-closed-outline"></ion-icon>
@@ -92,7 +94,7 @@
             <p>Secure company onboard. </p>
             <p class="text">Streamline new member onboarding with guided access, role setup, and secure company integration. </p>
         </div>
-        <div class="card">
+        <div class="card el" appIntersectionObserver [threshold]="0.7" (intersecting)="onCard7Intersecting($event)" [class.scaledIn]="promoteSectionElements.card7">
             <div class="card_header">
                 <div class="icon">
                     <ion-icon name="chatbox-outline"></ion-icon>
@@ -106,17 +108,17 @@
 </section> 
 
 <section id="faq">
-    <div class="header">
-        <div class="board">
-            <ion-icon name="help-circle-outline"></ion-icon>
-            <span>FAQ</span>
+    <div class="header" >
+        <div class="board"appIntersectionObserver [threshold]="1" (intersecting)="onFaqSpanIntersection($event)">
+            <ion-icon name="help-circle-outline" class="el" [class.scaledIn]="faqSectionElements.span"></ion-icon>
+            <span class="el" [class.scaledIn]="faqSectionElements.span">FAQ</span>
         </div>
-        <h3>Frequently Asked Questions</h3>
-        <p>Find quick answers to common questions about Propel.</p>
+        <h3 appIntersectionObserver [threshold]="1" class="el" (intersecting)="onFaqH3Intersection($event)" [class.scaledIn]="faqSectionElements.h3">Frequently Asked Questions</h3>
+        <p appIntersectionObserver [threshold]="1" (intersecting)="onFaqPIntersection($event)" class="el" [class.scaledIn]="faqSectionElements.p">Find quick answers to common questions about Propel.</p>
     </div>
     <ul id="accordion">
         <li>
-            <label for="first">How does my company get access to Propel? <span></span> </label>
+            <label for="first" class="label">How does my company get access to Propel? <span></span> </label>
             <input type="radio" name="accordion" id="first">
             <div class="content">
                 <p>
@@ -127,7 +129,7 @@
             </div>
         </li>
         <li>
-            <label for="second">How long does the approval process take? <span></span> </label>
+            <label for="second" class="label">How long does the approval process take? <span></span> </label>
             <input type="radio" name="accordion" id="second" >
             <div class="content">
                 <p>
@@ -136,7 +138,7 @@
             </div>
         </li>
         <li>
-            <label for="third">Can one user be part of multiple projects? <span></span> </label>
+            <label for="third" class="label">Can one user be part of multiple projects? <span></span> </label>
             <input type="radio" name="accordion" id="third" >
             <div class="content">
                 <p>
@@ -145,7 +147,7 @@
             </div>
         </li>
         <li>
-            <label for="fourth">Who can assign tasks to team members? <span></span> </label>
+            <label for="fourth" class="label">Who can assign tasks to team members? <span></span> </label>
             <input type="radio" name="accordion" id="fourth" >
             <div class="content">
                 <p>
@@ -154,7 +156,7 @@
             </div>
         </li>
         <li>
-            <label for="fifth"> Is the chat private between users? <span></span> </label>
+            <label for="fifth" class="label"> Is the chat private between users? <span></span> </label>
             <input type="radio" name="accordion" id="fifth" >
             <div class="content">
                 <p>
@@ -163,7 +165,7 @@
             </div>
         </li>
         <li>
-            <label for="sixth">What happens to our data if our account is deactivated? <span></span> </label>
+            <label for="sixth" class="label">What happens to our data if our account is deactivated? <span></span> </label>
             <input type="radio" name="accordion" id="sixth" >
             <div class="content">
                 <p>

@@ -1,7 +1,8 @@
 @use '../../../../../../styles/index' as *;
 
 section {
-    height: 100vh;
+    height: auto; 
+    align-items: start;
 
     display: grid;
     grid-template-columns: 0.8fr 1fr;
@@ -19,6 +20,10 @@ section {
         display: flex;
         justify-content: center;
         align-items: end;
+
+        position: sticky;
+        top: 0;
+        height: 100vh;
 
         @include lg {
             display: none;
@@ -135,6 +140,7 @@ section {
             top: 0.5rem;
             left: 0.5rem;
             right: 0.5rem;
+            z-index: 1000;
 
             padding: 0.5rem;
             width: 100%;
@@ -214,10 +220,6 @@ section {
                             gap: 1rem;
                         }
 
-                        .field {
-                            width: 100%;
-                        }
-
                         .file {
                             width: 100%;
 
@@ -270,6 +272,7 @@ section {
                             }
                         }
                     }
+
                 }
             }
 
@@ -298,11 +301,6 @@ section {
                 }
 
             }
-        }
-
-        
-
-        
+        }   
     }
-    
 }

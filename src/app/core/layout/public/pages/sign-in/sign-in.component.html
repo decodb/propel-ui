@@ -1,18 +1,18 @@
 <section>
     <a routerLink="/" class="btn btn-secondary back"><ion-icon name="arrow-back-outline"></ion-icon> Go back</a>
-    <form>
+    <form appIntersectionObserver [threshold]="1" (intersecting)="onSignInFormIntersection($event)">
         <div class="header">
             <h3>Sign in</h3>
             <p>Please enter your credentials to login</p>
         </div>
         <div class="fields">
-            <div class="field">
+            <div class="field" [class.scaledIn]="signInFields.email">
                 <label for="email">Email <span>*</span></label>
                 <div class="input">
                     <input id="email" type="email" placeholder="eg. b_mkwanazi@icloud.com">
                 </div>
             </div>
-            <div class="field">
+            <div class="field" [class.scaledIn]="signInFields.password">
                 <label for="password">Password</label>
                 <div class="input">
                     <input id="password" [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password">

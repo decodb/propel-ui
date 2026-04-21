@@ -40,20 +40,20 @@
             <p>Fill in the required information to get started. </p>
         </div>
         <form>
-            <div class="company_details">
+            <div class="company_details" appIntersectionObserver [threshold]="0.5" (intersecting)="onCompanyDetailsIntersection($event)">
                 <div class="header">
                     <ion-icon name="business-outline"></ion-icon>
                     <span>Company Information</span>
                 </div>
                 <div class="fields">
                     <div class="row">
-                        <div class="field">
+                        <div class="field" [class.scaledIn]="companyFields.name">
                             <label for="name">Name <span>*</span></label>
                             <div class="input">
                                 <input id="name" type="text" placeholder="eg. Propel">
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="field" [class.scaledIn]="companyFields.industry">
                             <label for="industry">Industry <span>*</span></label>
                             <div class="input">
                                 <input id="industry" type="text" placeholder="IT and Software">
@@ -61,20 +61,20 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="field">
+                        <div class="field" [class.scaledIn]="companyFields.phone">
                             <label for="number">Phone <span>*</span></label>
                             <div class="input">
                                 <input id="number" type="text" placeholder="eg. +27 084 048 4407">
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="field" [class.scaledIn]="companyFields.website">
                             <label for="website">Website</label>
                             <div class="input">
                                 <input id="website" type="text" placeholder="eg. propel.co.za">                            </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="file">
+                        <div class="file field" [class.scaledIn]="companyFields.image">
                             <label>Resume <span class="required">*</span></label>
                             <div
                                 class="dropzone"
@@ -107,32 +107,32 @@
                     </div>
                 </div>
             </div>
-            <div class="admin_details">
+            <div class="admin_details" appIntersectionObserver [threshold]="0.5" (intersecting)="onAdminDetailsIntersection($event)">
                 <div class="header">
                     <ion-icon name="person-outline"></ion-icon>
                     <span>Admin Information</span>
                 </div>
                 <div class="fields">
                     <div class="row">
-                        <div class="field">
+                        <div class="field" [class.scaledIn]="adminDetails.firstName">
                             <label for="first_name">First name <span>*</span></label>
                             <div class="input">
                                 <input id="first_name" type="text" placeholder="eg. Boitumelo">
                             </div>                        </div>
-                        <div class="field">
+                        <div class="field" [class.scaledIn]="adminDetails.lastName">
                             <label for="last_name">Last name</label>
                             <div class="input">
                                 <input id="last_name" type="text" placeholder="eg. Mkhwanazi">
                             </div>
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field" [class.scaledIn]="adminDetails.email">
                         <label for="email">Email <span>*</span></label>
                         <div class="input">
                             <input id="email" type="email" placeholder="eg. b_mkwanazi@icloud.com">
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field" [class.scaledIn]="adminDetails.password">
                         <label for="password">Password</label>
                         <div class="input">
                             <input id="password" [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password">
@@ -143,7 +143,7 @@
                             }
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field" [class.scaledIn]="adminDetails.confirmPassword">
                         <label for="confirm_password">Confirm Password</label>
                         <div class="input">
                             <input id="confirm_password" [type]="showPassword() ? 'text' : 'password'" placeholder="Confirm your password">
