@@ -1,10 +1,12 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Output, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { IntersectionObserverDirective } from "../../../../../shared/directives/intersection-observer.directive";
+import { AbstractControl, FormGroup, FormControl, ReactiveFormsModule, ValidationErrors, Validators} from '@angular/forms';
+
 
 @Component({
   selector: 'app-sign-up',
-  imports: [RouterLink, IntersectionObserverDirective],
+  imports: [RouterLink, IntersectionObserverDirective, ReactiveFormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss'
@@ -15,6 +17,69 @@ export class SignUpComponent {
 
   selectedFile: File | null = null;
   isDragging = false;
+
+  registrationForm = new FormGroup({
+    company: new FormGroup({
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(100),
+      ]),
+      industry: new FormControl('', [
+        Validators.required,
+      ]),
+      phone: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^\+?[\d\s\-().]{7,15}$/),
+      ]),
+      website: new FormControl('', [
+        Validators.pattern(/^(https?:\/\/)?([\w\-]+\.)+[\w]{2,}(\/.*)?$/),
+      ]),
+    }),
+
+    admin: new FormGroup({
+      firstName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50),
+      ]),
+      lastName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50),
+      ]),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.email,
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/),
+      ]),
+      confirmPassword: new FormControl('', [
+        Validators.required,
+      ]),
+    }, { validators: this.passwordMatchValidator }),
+  });
+
+  // check if passwords match
+  passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { passwordMismatch: true };
+  }
+
+  // check if a field has an error
+  hasError(path: string | string[], error: string): boolean {
+    const control = this.registrationForm.get(path);
+    return !!control && control.hasError(error) && (control.dirty || control.touched);
+  }
+
+  onSubmit() {
+    //console.log(this.registrationForm.value)
+    console.log(this.selectedFile)
+  }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;

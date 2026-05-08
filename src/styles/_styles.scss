@@ -55,6 +55,11 @@ section {
   color: $color-surface;
 }
 
+.error {
+  color: $color-error;
+  font-size: 0.75rem;
+}
+
 .el {
   opacity: 0;
 

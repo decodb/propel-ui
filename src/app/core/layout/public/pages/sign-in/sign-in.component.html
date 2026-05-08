@@ -1,6 +1,6 @@
 <section>
     <a routerLink="/" class="btn btn-secondary back"><ion-icon name="arrow-back-outline"></ion-icon> Go back</a>
-    <form appIntersectionObserver [threshold]="1" (intersecting)="onSignInFormIntersection($event)">
+    <form appIntersectionObserver [threshold]="1" (intersecting)="onSignInFormIntersection($event)" [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="header">
             <h3>Sign in</h3>
             <p>Please enter your credentials to login</p>
@@ -9,24 +9,34 @@
             <div class="field" [class.scaledIn]="signInFields.email">
                 <label for="email">Email <span>*</span></label>
                 <div class="input">
-                    <input id="email" type="email" placeholder="eg. b_mkwanazi@icloud.com">
+                    <input id="email" type="email" placeholder="eg. b_mkwanazi@icloud.com" formControlName="email">
                 </div>
+                @if (hasError('email', 'required')) {
+                    <p class="error">Email is required<p>
+                }
+
+                @if (hasError('email', 'email')) {
+                    <p class="error">Please enter a valid email <p>
+                }
             </div>
             <div class="field" [class.scaledIn]="signInFields.password">
                 <label for="password">Password</label>
                 <div class="input">
-                    <input id="password" [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password">
+                    <input id="password" [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password" formControlName="password">
                     @if(showPassword()) {
                         <ion-icon name="eye-outline" (click)="togglePassword()"></ion-icon>
                     } @else {
                         <ion-icon name="eye-off-outline" (click)="togglePassword()"></ion-icon>
                     }
                 </div>
+                @if (hasError('password', 'required')) {
+                    <p class="error">Password is required <p>
+                }
             </div>
             <a routerLink="/forgot-password">Forgot your password?</a>
         </div>
         <div class="button">
-            <button class="btn">Sign in</button>
+            <button class="btn" type="submit">Sign in</button>
             <p>Don't have an account? <a routerLink="/sign-up">Sign up</a></p>
         </div>
     </form>

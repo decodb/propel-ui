@@ -39,8 +39,8 @@
             <h3>Sign Up</h3>
             <p>Fill in the required information to get started. </p>
         </div>
-        <form>
-            <div class="company_details" appIntersectionObserver [threshold]="0.5" (intersecting)="onCompanyDetailsIntersection($event)">
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+            <div class="company_details" appIntersectionObserver [threshold]="0.5" (intersecting)="onCompanyDetailsIntersection($event)" formGroupName="company">
                 <div class="header">
                     <ion-icon name="business-outline"></ion-icon>
                     <span>Company Information</span>
@@ -50,27 +50,47 @@
                         <div class="field" [class.scaledIn]="companyFields.name">
                             <label for="name">Name <span>*</span></label>
                             <div class="input">
-                                <input id="name" type="text" placeholder="eg. Propel">
+                                <input id="name" type="text" placeholder="eg. Propel" formControlName="name">
                             </div>
+                            @if (hasError(['company', 'name'], 'required')) {
+                                <p class="error">Name is required <p>
+                            }
+                            @if (hasError(['company', 'name'], 'minlength')) {
+                                <p class="error">Name should have 3 minimum characters<p>
+                            }
                         </div>
                         <div class="field" [class.scaledIn]="companyFields.industry">
                             <label for="industry">Industry <span>*</span></label>
                             <div class="input">
-                                <input id="industry" type="text" placeholder="IT and Software">
+                                <input id="industry" type="text" placeholder="IT and Software" formControlName="industry">
                             </div>
+                            @if (hasError(['company', 'industry'], 'required')) {
+                                <p class="error">Industry is required <p>
+                            }
                         </div>
                     </div>
                     <div class="row">
                         <div class="field" [class.scaledIn]="companyFields.phone">
                             <label for="number">Phone <span>*</span></label>
                             <div class="input">
-                                <input id="number" type="text" placeholder="eg. +27 084 048 4407">
+                                <input id="number" type="text" placeholder="eg. +27 084 048 4407" formControlName="phone">
                             </div>
+                            @if (hasError(['company', 'phone'], 'required')) {
+                                <p class="error">Phone number is required <p>
+                            }
+
+                            @if (hasError(['company', 'phone'], 'pattern')) {
+                                <p class="error">Please enter a valid phone number<p>
+                            }
                         </div>
                         <div class="field" [class.scaledIn]="companyFields.website">
                             <label for="website">Website</label>
                             <div class="input">
-                                <input id="website" type="text" placeholder="eg. propel.co.za">                            </div>
+                                <input id="website" type="text" placeholder="eg. propel.co.za" formControlName="website">                            
+                            </div>
+                            @if (hasError(['company', 'website'], 'pattern')) {
+                                <p class="error">Please enter a valid website link<p>
+                            }
                         </div>
                     </div>
                     <div class="row">
@@ -107,7 +127,7 @@
                     </div>
                 </div>
             </div>
-            <div class="admin_details" appIntersectionObserver [threshold]="0.5" (intersecting)="onAdminDetailsIntersection($event)">
+            <div class="admin_details" appIntersectionObserver [threshold]="0.5" (intersecting)="onAdminDetailsIntersection($event)" formGroupName="admin">
                 <div class="header">
                     <ion-icon name="person-outline"></ion-icon>
                     <span>Admin Information</span>
@@ -117,47 +137,91 @@
                         <div class="field" [class.scaledIn]="adminDetails.firstName">
                             <label for="first_name">First name <span>*</span></label>
                             <div class="input">
-                                <input id="first_name" type="text" placeholder="eg. Boitumelo">
-                            </div>                        </div>
+                                <input id="first_name" type="text" placeholder="eg. Boitumelo" formControlName="firstName">
+                            </div>
+                            @if (hasError(['admin', 'firstName'], 'required')) {
+                                <p class="error">First name is required <p>
+                            }
+
+                            @if (hasError(['admin', 'firstName'], 'minlength')) {
+                                <p class="error">First name should have 3 minimum characters <p>
+                            }
+
+                            @if (hasError(['admin', 'firstName'], 'maxlength')) {
+                                <p class="error">First name should have 100 maximum characters<p>
+                            }
+                        </div>
                         <div class="field" [class.scaledIn]="adminDetails.lastName">
                             <label for="last_name">Last name</label>
                             <div class="input">
-                                <input id="last_name" type="text" placeholder="eg. Mkhwanazi">
+                                <input id="last_name" type="text" placeholder="eg. Mkhwanazi" formControlName="lastName">
                             </div>
+                            @if (hasError(['admin', 'lastName'], 'required')) {
+                                <p class="error">Last name is required <p>
+                            }
+
+                            @if (hasError(['admin', 'lastName'], 'minlength')) {
+                                <p class="error">Last name should have 3 minimum characters <p>
+                            }
+
+                            @if (hasError(['admin', 'lastName'], 'maxlength')) {
+                                <p class="error">First name should have 100 maximum characters<p>
+                            }
                         </div>
                     </div>
                     <div class="field" [class.scaledIn]="adminDetails.email">
                         <label for="email">Email <span>*</span></label>
                         <div class="input">
-                            <input id="email" type="email" placeholder="eg. b_mkwanazi@icloud.com">
+                            <input id="email" type="email" placeholder="eg. b_mkwanazi@icloud.com" formControlName="email">
                         </div>
+                        @if (hasError(['admin', 'email'], 'required')) {
+                            <p class="error">Email is required<p>
+                        }
+
+                        @if (hasError(['admin', 'email'], 'email')) {
+                            <p class="error">Please enter a valid email <p>
+                        }
                     </div>
                     <div class="field" [class.scaledIn]="adminDetails.password">
                         <label for="password">Password</label>
                         <div class="input">
-                            <input id="password" [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password">
+                            <input id="password" [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password" formControlName="password">
                             @if(showPassword()) {
                                 <ion-icon name="eye-outline" (click)="togglePassword()"></ion-icon>
                             } @else {
                                 <ion-icon name="eye-off-outline" (click)="togglePassword()"></ion-icon>
                             }
                         </div>
+                        @if (hasError(['admin', 'password'], 'required')) {
+                            <p class="error">Password is required <p>
+                        }
+
+                        @if (hasError(['admin', 'password'], 'minlength')) {
+                            <p class="error">Password is required to have a minimum of 2 characters<p>
+                        }
+
+                        @if (hasError(['admin', 'password'], 'pattern')) {
+                            <p class="error">Password must contain uppercase, lowercase, number & special character <p>
+                        }
                     </div>
                     <div class="field" [class.scaledIn]="adminDetails.confirmPassword">
                         <label for="confirm_password">Confirm Password</label>
                         <div class="input">
-                            <input id="confirm_password" [type]="showPassword() ? 'text' : 'password'" placeholder="Confirm your password">
+                            <input id="confirm_password" [type]="showPassword() ? 'text' : 'password'" placeholder="Confirm your password" formControlName="confirmPassword">
                             @if(showPassword()) {
                                 <ion-icon name="eye-outline" (click)="togglePassword()"></ion-icon>
                             } @else {
                                 <ion-icon name="eye-off-outline" (click)="togglePassword()"></ion-icon>
                             }
                         </div>
+                        @if (hasError(['admin', 'password'], 'required')) {
+                            <p class="error">Confirm password is required. <p>
+                        }
                     </div>
                 </div>
             </div>
             <div class="button">
-                <button class="btn">Sign Up</button>
+                <button class="btn" type="submit">Sign Up</button>
                 <p>Already have an account? <a routerLink="/sign-in">Log in</a></p>
             </div>
         </form>
