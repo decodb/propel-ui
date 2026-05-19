@@ -1,7 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Output, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
-import { IntersectionObserverDirective } from "../../../../../shared/directives/intersection-observer.directive";
 import { AbstractControl, FormGroup, FormControl, ReactiveFormsModule, ValidationErrors, Validators} from '@angular/forms';
+import { IntersectionObserverDirective } from '../../../../shared/directives/intersection-observer.directive';
 
 
 @Component({

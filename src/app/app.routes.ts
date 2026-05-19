@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { PUBLIC_ROUTES } from './core/layout/public/public.routes';
+import { AUTH_ROUTES } from './core/auth/auth.routes';
 
 export const routes: Routes = [
-    ...PUBLIC_ROUTES
+    ...PUBLIC_ROUTES,
+    ...AUTH_ROUTES
 ];
