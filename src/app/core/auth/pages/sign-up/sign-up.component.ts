@@ -18,6 +18,9 @@ export class SignUpComponent {
   selectedFile: File | null = null;
   isDragging = false;
 
+  isLoading = signal<boolean>(false);
+  isDialogOpen = signal<boolean>(false);
+
   registrationForm = new FormGroup({
     company: new FormGroup({
       name: new FormControl('', [
@@ -63,22 +66,13 @@ export class SignUpComponent {
     }, { validators: this.passwordMatchValidator }),
   });
 
-  // check if passwords match
-  passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
-    const password = group.get('password')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { passwordMismatch: true };
-  }
-
-  // check if a field has an error
-  hasError(path: string | string[], error: string): boolean {
-    const control = this.registrationForm.get(path);
-    return !!control && control.hasError(error) && (control.dirty || control.touched);
-  }
-
   onSubmit() {
-    //console.log(this.registrationForm.value)
-    console.log(this.selectedFile)
+    //this.isLoading.set(true)
+    this.isDialogOpen.set(true)
+  }
+
+  onCloseDialog() {
+    this.isDialogOpen.set(false)
   }
 
   onFileSelected(event: Event): void {
@@ -115,6 +109,19 @@ export class SignUpComponent {
 
   togglePassword() {
     this.showPassword.set(!this.showPassword())
+  }
+
+  // check if passwords match
+  passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { passwordMismatch: true };
+  }
+
+  // check if a field has an error
+  hasError(path: string | string[], error: string): boolean {
+    const control = this.registrationForm.get(path);
+    return !!control && control.hasError(error) && (control.dirty || control.touched);
   }
 
   // Intersection Observer

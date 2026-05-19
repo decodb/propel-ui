@@ -1,5 +1,6 @@
 @use 'variables' as *;
 @use 'mixins' as *;
+@use 'keyframes' as *;
 
 section {
   display: flex;
@@ -17,7 +18,7 @@ section {
 .btn {
   background-color: $color-primary;
   font-size: 0.9rem;
-  color: #fff; // or appropriate contrast color
+  color: #fff;
   border: none;
 
   display: flex;
@@ -47,12 +48,67 @@ section {
     transform: translateY(-1px);
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
   }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .orbit-ring {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+
+    svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+  }
 }
 
 .btn-secondary {
   background-color: transparent;
   border: 1.5px solid $color-surface;
   color: $color-surface;
+}
+
+.dot1 { transform-origin: center; animation: orbit1 1.4s cubic-bezier(0.5, 0, 0.5, 1) infinite; }
+.dot2 { transform-origin: center; animation: orbit2 1.4s cubic-bezier(0.5, 0, 0.5, 1) infinite; }
+.dot3 { transform-origin: center; animation: orbit3 1.4s cubic-bezier(0.5, 0, 0.5, 1) infinite; }
+
+.dot1 circle { animation: fadepulse 1.4s ease-in-out infinite 0s;    }
+.dot2 circle { animation: fadepulse 1.4s ease-in-out infinite 0.47s; }
+.dot3 circle { animation: fadepulse 1.4s ease-in-out infinite 0.94s; }
+
+.backdrop {
+  background: rgba(0, 0, 0, 0.4); 
+  backdrop-filter: blur(6px); 
+  -webkit-backdrop-filter: blur(6px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+}
+
+dialog {
+  padding: 2.5rem 2rem 2rem;
+  margin: 0 auto;
+  width: 80%;
+  max-width: 25rem;
+  background: lighten($color-primary-dark, 8%);
+  color: $color-surface;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  padding: 1rem;
+  top: 5rem;
+  z-index: 10000;
 }
 
 .error {
