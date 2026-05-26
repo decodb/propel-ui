@@ -1,0 +1,11 @@
+@if (status() === 'loading') {
+  <p>Verifying your email...</p>
+}
+
+@if (status() === 'success') {
+  <p>Email verified! <a routerLink="/sign-in">Log in</a></p>
+}
+
+@if (status() === 'error') {
+  <p>This link is invalid or has expired.</p>
+}

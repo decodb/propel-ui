@@ -15,4 +15,10 @@ export class AuthService {
   signUp (dto: FormData): Observable<AuthRegisterResponse> {
     return this.http.post<AuthRegisterResponse>(`${environment.apiUrl}/register`, dto)
   }
+
+  verifyEmail(token: string): Observable<string> {
+    return this.http.get(`${environment.apiUrl}/register/verify-email?token=${token}`, {
+      responseType: 'text'
+    });
+  }
 }
