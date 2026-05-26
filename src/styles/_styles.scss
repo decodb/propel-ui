@@ -1,6 +1,7 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 @use 'keyframes' as *;
+@use 'sass:color';
 
 section {
   display: flex;
@@ -100,7 +101,7 @@ dialog {
   margin: 0 auto;
   width: 80%;
   max-width: 25rem;
-  background: lighten($color-primary-dark, 8%);
+  background: color.adjust($color-primary-dark, $lightness: 8%);
   color: $color-surface;
   border: 0.5px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;

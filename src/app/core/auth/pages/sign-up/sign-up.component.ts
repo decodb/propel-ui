@@ -1,79 +1,104 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Output, signal } from '@angular/core';
-import { RouterLink } from "@angular/router";
-import { AbstractControl, FormGroup, FormControl, ReactiveFormsModule, ValidationErrors, Validators} from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { AbstractControl, FormGroup, FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { IntersectionObserverDirective } from '../../../../shared/directives/intersection-observer.directive';
-
+import { CreateRegistrationDto } from '../../auth.model';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-sign-up',
   imports: [RouterLink, IntersectionObserverDirective, ReactiveFormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.scss'
+  styleUrl: './sign-up.component.scss',
 })
 export class SignUpComponent {
+  // File
   @Output() fileSelected = new EventEmitter<File>();
-  showPassword = signal<boolean>(false);
-
   selectedFile: File | null = null;
   isDragging = false;
 
-  isLoading = signal<boolean>(false);
-  isDialogOpen = signal<boolean>(false);
+  // UI state
+  isSubmitted    = signal(false);
+  isLoading      = signal(false);
+  isDialogOpen   = signal(false);
+  showPassword   = signal(false);
+  errorMessage   = signal('');
+  userEmail      = signal('');
+
+  // Animation visibility
+  companyFields = { name: false, industry: false, phone: false, website: false, image: false };
+  adminDetails  = { firstName: false, lastName: false, email: false, password: false, confirmPassword: false };
 
   registrationForm = new FormGroup({
     company: new FormGroup({
-      name: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(100),
-      ]),
-      industry: new FormControl('', [
-        Validators.required,
-      ]),
-      phone: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^\+?[\d\s\-().]{7,15}$/),
-      ]),
-      website: new FormControl('', [
-        Validators.pattern(/^(https?:\/\/)?([\w\-]+\.)+[\w]{2,}(\/.*)?$/),
-      ]),
+      name:     new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]),
+      industry: new FormControl('', [Validators.required]),
+      phone:    new FormControl('', [Validators.required, Validators.pattern(/^\+?[\d\s\-().]{7,15}$/)]),
+      website:  new FormControl('', [Validators.pattern(/^(https?:\/\/)?([\w\-]+\.)+[\w]{2,}(\/.*)?$/)]),
     }),
-
     admin: new FormGroup({
-      firstName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50),
-      ]),
-      lastName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50),
-      ]),
-      email: new FormControl('', [
-        Validators.required,
-        Validators.email,
-      ]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/),
-      ]),
-      confirmPassword: new FormControl('', [
-        Validators.required,
-      ]),
+      firstName:       new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+      lastName:        new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+      email:           new FormControl('', [Validators.required, Validators.email]),
+      password:        new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/)]),
+      confirmPassword: new FormControl('', [Validators.required]),
     }, { validators: this.passwordMatchValidator }),
   });
 
+  constructor(private authService: AuthService) {}
+
+  // ─── Form ────────────────────────────────────────────────────────────────
+
   onSubmit() {
-    //this.isLoading.set(true)
-    this.isDialogOpen.set(true)
+    this.isSubmitted.set(true);
+    if (this.registrationForm.invalid || !this.selectedFile) return;
+
+    this.isLoading.set(true);
+    this.authService.signUp(this.buildFormData()).subscribe({
+      next:     (response) => { this.userEmail.set(response.email); this.isDialogOpen.set(true); },
+      error:    (err: HttpErrorResponse) => { this.errorMessage.set(err.error.message); this.isLoading.set(false); },
+      complete: () => { this.isLoading.set(false); this.registrationForm.reset(); },
+    });
   }
 
-  onCloseDialog() {
-    this.isDialogOpen.set(false)
+  hasError(path: string | string[], error: string): boolean {
+    const control = this.registrationForm.get(path);
+    return !!control && control.hasError(error) && (control.dirty || control.touched || this.isSubmitted());
   }
+
+  passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
+    const password        = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { passwordMismatch: true };
+  }
+
+  private buildFormData(): FormData {
+    const { firstName, lastName, email, password } = this.registrationForm.controls.admin.controls;
+    const { name, industry, website, phone }       = this.registrationForm.controls.company.controls;
+
+    const formData = new FormData();
+    formData.append('user[firstName]', firstName.value!);
+    formData.append('user[lastName]',  lastName.value!);
+    formData.append('user[email]',     email.value!.toLowerCase());
+    formData.append('user[password]',  password.value!);
+    formData.append('company[name]',   name.value!);
+    formData.append('company[industry]', industry.value!);
+    formData.append('company[phone]',    phone.value!);
+    if (website.value) formData.append('company[website]', website.value);
+    formData.append('file', this.selectedFile!);
+
+    return formData;
+  }
+
+  // ─── Dialog ──────────────────────────────────────────────────────────────
+
+  onCloseDialog() {
+    this.isDialogOpen.set(false);
+  }
+
+  // ─── File ────────────────────────────────────────────────────────────────
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -89,7 +114,7 @@ export class SignUpComponent {
     event.preventDefault();
     this.isDragging = false;
   }
-  
+
   onDrop(event: DragEvent): void {
     event.preventDefault();
     this.isDragging = false;
@@ -107,57 +132,23 @@ export class SignUpComponent {
     this.fileSelected.emit(file);
   }
 
+  // ─── UI helpers ──────────────────────────────────────────────────────────
+
   togglePassword() {
-    this.showPassword.set(!this.showPassword())
+    this.showPassword.update(v => !v);
   }
 
-  // check if passwords match
-  passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
-    const password = group.get('password')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { passwordMismatch: true };
-  }
-
-  // check if a field has an error
-  hasError(path: string | string[], error: string): boolean {
-    const control = this.registrationForm.get(path);
-    return !!control && control.hasError(error) && (control.dirty || control.touched);
-  }
-
-  // Intersection Observer
-  companyFields = {
-    name: false,
-    industry: false,
-    phone: false,
-    website: false,
-    image: false
-  }
-
-  adminDetails = {
-    firstName: false,
-    lastName: false,
-    email: false,
-    password: false,
-    confirmPassword: false
-  }
+  // ─── Intersection Observer ───────────────────────────────────────────────
 
   onCompanyDetailsIntersection(isVisible: boolean) {
-    if (isVisible) {
-      setTimeout(() => { this.companyFields.name = true; }, 500);
-      setTimeout(() => { this.companyFields.industry = true; }, 1000);
-      setTimeout(() => { this.companyFields.phone = true; }, 1500);
-      setTimeout(() => { this.companyFields.website = true; }, 2000);
-      setTimeout(() => { this.companyFields.image = true; }, 2500);
-    }
+    if (!isVisible) return;
+    const keys = Object.keys(this.companyFields) as (keyof typeof this.companyFields)[];
+    keys.forEach((key, i) => setTimeout(() => { this.companyFields[key] = true; }, (i + 1) * 500));
   }
 
   onAdminDetailsIntersection(isVisible: boolean) {
-    if (isVisible) {
-      setTimeout(() => { this.adminDetails.firstName = true; }, 500);
-      setTimeout(() => { this.adminDetails.lastName = true; }, 1000);
-      setTimeout(() => { this.adminDetails.email = true; }, 1500);
-      setTimeout(() => { this.adminDetails.password = true; }, 2000);
-      setTimeout(() => { this.adminDetails.confirmPassword = true; }, 2500);
-    }
+    if (!isVisible) return;
+    const keys = Object.keys(this.adminDetails) as (keyof typeof this.adminDetails)[];
+    keys.forEach((key, i) => setTimeout(() => { this.adminDetails[key] = true; }, (i + 1) * 500));
   }
 }

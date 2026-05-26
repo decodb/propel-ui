@@ -1,4 +1,4 @@
-@if(isDialogOpen()) {
+@if(isDialogOpen() && userEmail()) {
     <div class="backdrop"></div>
     <dialog open>
         <div class="icon-wrap" aria-hidden="true">
@@ -10,7 +10,7 @@
 
         <p class="dialog-title">You're all set!</p>
         <p class="dialog-sub">We've sent a verification link to</p>
-        <p class="dialog-email">hello&#64;yourname.com</p>
+        <p class="dialog-email">{{ userEmail() }}</p>
 
         <div class="divider"></div>
 
@@ -129,7 +129,7 @@
 
                                 <input #fileInput type="file"
                                     style="display:none"
-                                    accept=".pdf,.doc,.docx"
+                                    accept="image/*"
                                     (change)="onFileSelected($event)">
 
                                 @if(!selectedFile) {
@@ -202,6 +202,10 @@
 
                         @if (hasError(['admin', 'email'], 'email')) {
                             <p class="error">Please enter a valid email <p>
+                        }
+
+                        @if (errorMessage()) {
+                            <p class="error">{{ errorMessage() }}</p>
                         }
                     </div>
                     <div class="field" [class.scaledIn]="adminDetails.password">
