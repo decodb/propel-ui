@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthRegisterResponse } from './auth.model';
+import { AuthForgotPasswordResponse, AuthRegisterResponse } from './auth.model';
 import { environment } from '../../enviroments/environment';
 
 @Injectable({
@@ -20,5 +20,11 @@ export class AuthService {
     return this.http.get(`${environment.apiUrl}/register/verify-email?token=${token}`, {
       responseType: 'text'
     });
+  }
+
+  forgotPassword(email: string): Observable<AuthForgotPasswordResponse> {
+    return this.http.post<AuthForgotPasswordResponse>(`${environment.apiUrl}/auth/forgot-password`,
+      { email }
+    )
   }
 }

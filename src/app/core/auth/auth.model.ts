@@ -22,3 +22,8 @@ export interface AuthRegisterResponse {
   email: string,
   err?: string
 }
+
+export interface AuthForgotPasswordResponse {
+  email: string,
+  err?: string
+}
