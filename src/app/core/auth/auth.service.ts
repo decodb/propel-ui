@@ -27,4 +27,10 @@ export class AuthService {
       { email }
     )
   }
+
+  resetPassword(token: string, password: string): Observable<AuthForgotPasswordResponse> {
+    return this.http.post<AuthForgotPasswordResponse>(`${environment.apiUrl}/auth/reset-password?token=${token}`,
+      { password }
+    )
+  }
 }

@@ -27,3 +27,8 @@ export interface AuthForgotPasswordResponse {
   email: string,
   err?: string
 }
+
+export interface AuthPasswordResetResponse {
+  message: string,
+  err?: string
+}

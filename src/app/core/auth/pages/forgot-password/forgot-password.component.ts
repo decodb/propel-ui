@@ -57,7 +57,6 @@ export class ForgotPasswordComponent {
     if (this.form.invalid) return;
 
     this.isLoading.set(true);
-
     this.authService.forgotPassword(this.form.value.email!).subscribe({
       next: () => {
         // 200 — show success dialog regardless of whether the email exists
