@@ -60,14 +60,12 @@ export class ResetPasswordComponent implements OnInit{
   
     this.isLoading.set(true);
     this.authService.resetPassword(this.token()!, this.form.controls.password.value!).subscribe({
-      next: (err) => {
-        console.log(err)
+      next: () => {
         this.dialogState = 'success';
         this.dialogVisible = true;
         this.isLoading.set(false);
       },
       error: (err: HttpErrorResponse) => {
-        console.log(err.error.message)
         this.dialogState = err.status === 409 ? 'invalid_token' : 'server_error';
         this.dialogVisible = true;
         this.isLoading.set(false);

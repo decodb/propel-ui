@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run generate-og-image && ng build",
+    "build": "node scripts/create-og-image.js || true && ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "generate-og-image": "node scripts/create-og-image.js"
