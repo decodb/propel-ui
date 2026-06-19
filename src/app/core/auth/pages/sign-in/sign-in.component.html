@@ -29,6 +29,9 @@
                         <ion-icon name="eye-off-outline" (click)="togglePassword()"></ion-icon>
                     }
                 </div>
+                @if (errorMessage()) {
+                    <p class="error">{{ errorMessage() }} Please try logging in. </p>
+                }
                 @if (hasError('password', 'required')) {
                     <p class="error">Password is required <p>
                 }
@@ -36,7 +39,20 @@
             <a routerLink="/forgot-password">Forgot your password?</a>
         </div>
         <div class="button">
-            <button class="btn" type="submit">Sign in</button>
+            <button class="btn" type="submit" [disabled]="isLoading()" [class.loading]="isLoading()">
+                @if(isLoading()) {
+                    <span class="orbit-ring" aria-hidden="true">
+                        <svg viewBox="0 0 16 16">
+                        <g class="dot1"><circle cx="8" cy="8" r="2" fill="#000"/></g>
+                        <g class="dot2"><circle cx="8" cy="8" r="2" fill="#000"/></g>
+                        <g class="dot3"><circle cx="8" cy="8" r="2" fill="#000"/></g>
+                        </svg>
+                    </span>
+                    <span>Signing in</span>
+                } @else {
+                    <span>Sign in</span>
+                }
+            </button>
             <p>Don't have an account? <a routerLink="/sign-up">Sign up</a></p>
         </div>
     </form>

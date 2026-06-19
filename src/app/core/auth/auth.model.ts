@@ -1,3 +1,8 @@
+export interface SignInDto {
+  email: string,
+  password: string
+}
+
 export interface CreateUserDto {
   firstName: string;
   lastName: string;

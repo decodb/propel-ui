@@ -2,6 +2,9 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IntersectionObserverDirective } from "../../../../shared/directives/intersection-observer.directive";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../auth.service';
+import { SignInDto } from '../../auth.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,6 +19,10 @@ export class SignInComponent {
     email: false,
     password: false
   }
+  isLoading = signal<boolean>(false);
+  errorMessage = signal<string>('')
+
+  constructor (private authService: AuthService) {}
 
   form = new FormGroup({
     email: new FormControl('', [
@@ -34,7 +41,28 @@ export class SignInComponent {
   }
 
   onSubmit() {
-    console.log(this.form.value)
+    if (this.form.invalid) return
+
+    const data: SignInDto = {
+      email: this.form.controls.email.value!,
+      password: this.form.controls.password.value!
+    }
+
+    this.isLoading.set(true);
+
+    this.authService.adminLogin(data)
+      .subscribe({
+        next: () => { 
+          // coming up
+        },
+        error: (err: HttpErrorResponse) => { 
+          if (err.error.statusCode === 401) {
+            this.errorMessage.set('Invalid credentials. ')
+          }
+          this.isLoading.set(false);
+        },
+        complete: () => { this.isLoading.set(false); this.form.reset(); },
+      })
   }
 
   togglePassword() {

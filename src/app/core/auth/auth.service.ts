@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthForgotPasswordResponse, AuthRegisterResponse } from './auth.model';
+import { AuthForgotPasswordResponse, AuthRegisterResponse, SignInDto } from './auth.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -11,6 +11,10 @@ export class AuthService {
   private http = inject(HttpClient);
 
   constructor() { }
+
+  adminLogin (dto: SignInDto): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${environment.apiUrl}/auth/admin/login`, dto)
+  }
 
   signUp (dto: FormData): Observable<AuthRegisterResponse> {
     return this.http.post<AuthRegisterResponse>(`${environment.apiUrl}/register`, dto)
