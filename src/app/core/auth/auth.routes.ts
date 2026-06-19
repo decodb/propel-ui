@@ -16,7 +16,7 @@ export const AUTH_ROUTES: Routes = [
         component: VerifyEmailComponent
     },
     {
-        path: 'sign-in',
+        path: 'admin/sign-in',
         component: SignInComponent
     },
     {
