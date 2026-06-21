@@ -5,10 +5,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../auth.service';
 import { SignInDto } from '../../auth.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ResetDialogState, ServerErrorDialogComponent } from "../../../../shared/components/server-error-dialog/server-error-dialog.component";
 
 @Component({
   selector: 'app-sign-in',
-  imports: [RouterLink, IntersectionObserverDirective, ReactiveFormsModule],
+  imports: [RouterLink, IntersectionObserverDirective, ReactiveFormsModule, ServerErrorDialogComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss'
@@ -20,7 +21,11 @@ export class SignInComponent {
     password: false
   }
   isLoading = signal<boolean>(false);
-  errorMessage = signal<string>('')
+  errorMessage = signal<string>('');
+
+    // ── Dialog ──────────────────────────────────────────────────────────────────
+    dialogVisible = false;
+    dialogState: ResetDialogState = 'server_error';
 
   constructor (private authService: AuthService) {}
 
@@ -58,11 +63,19 @@ export class SignInComponent {
         error: (err: HttpErrorResponse) => { 
           if (err.error.statusCode === 401) {
             this.errorMessage.set('Invalid credentials. ')
+          } else {
+            this.dialogState = 'server_error';
+            this.dialogVisible = true;
           }
           this.isLoading.set(false);
         },
         complete: () => { this.isLoading.set(false); this.form.reset(); },
       })
+  }
+
+  onRetry(): void {
+    // Form values are preserved so the user can resubmit immediately
+    this.dialogVisible = false;
   }
 
   togglePassword() {

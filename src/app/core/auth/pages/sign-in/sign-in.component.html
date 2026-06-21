@@ -1,3 +1,11 @@
+<app-server-error-dialog
+  [visible]="dialogVisible"
+  [state]="dialogState"
+  [redirectAfter]="5"
+  (closed)="dialogVisible = false"
+  (retryRequested)="onRetry()">
+</app-server-error-dialog>
+
 <section>
     <a routerLink="/" class="btn btn-secondary back"><ion-icon name="arrow-back-outline"></ion-icon> Go back</a>
     <form appIntersectionObserver [threshold]="1" (intersecting)="onSignInFormIntersection($event)" [formGroup]="form" (ngSubmit)="onSubmit()">

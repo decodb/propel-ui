@@ -1,0 +1,51 @@
+@if (visible) {
+<div class="dialog-backdrop" (click)="onBackdropClick($event)" [@backdropIn]>
+  <div class="dialog" role="dialog" [attr.aria-labelledby]="'dialog-title-' + state" [@dialogIn] [class.dialog--shake]="shaking">
+
+    <!-- Top accent bar -->
+    <div class="dialog__bar"
+
+      [class.dialog__bar--warning]="state === 'server_error'">
+    </div>
+
+    <!-- Close button -->
+    <button class="dialog__close" (click)="close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <!-- ── SERVER ERROR ───────────────────────────────────────── -->
+    @if (state === 'server_error') {
+      <div class="dialog__body dialog__body--centered" [@stateIn]>
+        <div class="icon-wrap">
+          <svg viewBox="0 0 72 72" width="72" height="72">
+            <circle cx="36" cy="36" r="30" fill="rgba(239,68,68,0.07)" stroke="rgba(239,68,68,0.18)" stroke-width="1.5"/>
+            <path d="M36 24 v14" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="36" cy="44" r="1.5" fill="#EF4444"/>
+          </svg>
+        </div>
+
+        <span class="chip chip--error">Server error</span>
+        <h2 class="dialog__title" [id]="'dialog-title-' + state">Something went wrong</h2>
+        <p class="dialog__desc">
+          An unexpected error occurred while resetting your password.
+          <strong>Your account is safe</strong> — please try again in a moment.
+        </p>
+
+        <div class="dialog__actions">
+          <button class="dialog__cta dialog__cta--ghost" (click)="close()">Cancel</button>
+          <button class="dialog__cta" (click)="retry()">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+              <path d="M1.5 6.5a5 5 0 1 0 .9-2.7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M1.5 2.5v4h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Try again
+          </button>
+        </div>
+      </div>
+    }
+
+  </div>
+</div>
+}
