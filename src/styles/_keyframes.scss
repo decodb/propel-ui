@@ -21,6 +21,17 @@
   }
 }
 
+@keyframes dropIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @keyframes orbit1 {
   from { transform: rotate(0deg)   translateX(6px) rotate(0deg);    }
   to   { transform: rotate(360deg) translateX(6px) rotate(-360deg); }
