@@ -61,6 +61,7 @@ export class SignInComponent {
           // coming up
         },
         error: (err: HttpErrorResponse) => { 
+          console.log(err)
           if (err.error.statusCode === 401) {
             this.errorMessage.set('Invalid credentials. ')
           } else {

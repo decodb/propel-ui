@@ -1,14 +1,20 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Output, signal } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, EventEmitter, HostListener, Output, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AbstractControl, FormGroup, FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IntersectionObserverDirective } from '../../../../shared/directives/intersection-observer.directive';
 import { CreateRegistrationDto } from '../../auth.model';
 import { AuthService } from '../../auth.service';
+import { ResetDialogState, ServerErrorDialogComponent } from '../../../../shared/components/server-error-dialog/server-error-dialog.component';
+
+interface IndustryOption {
+  value: 'TECHNOLOGY' | 'HEALTHCARE' | 'FINANCE' | 'EDUCATION' | 'MANUFACTURING';
+  label: string;
+}
 
 @Component({
   selector: 'app-sign-up',
-  imports: [RouterLink, IntersectionObserverDirective, ReactiveFormsModule],
+  imports: [RouterLink, IntersectionObserverDirective, ReactiveFormsModule, ServerErrorDialogComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
@@ -18,6 +24,10 @@ export class SignUpComponent {
   @Output() fileSelected = new EventEmitter<File>();
   selectedFile: File | null = null;
   isDragging = false;
+
+    // ── Dialog ──────────────────────────────────────────────────────────────────
+    dialogVisible = false;
+    dialogState: ResetDialogState = 'server_error';
 
   // UI state
   isSubmitted    = signal(false);
@@ -30,6 +40,18 @@ export class SignUpComponent {
   // Animation visibility
   companyFields = { name: false, industry: false, phone: false, website: false, image: false };
   adminDetails  = { firstName: false, lastName: false, email: false, password: false, confirmPassword: false };
+
+  // ── Industry dropdown ───────────────────────────────────────────────────────
+  isIndustryOpen = false;
+  industryFocusedIndex = -1;
+
+  industryOptions: IndustryOption[] = [
+    { value: 'TECHNOLOGY',     label: 'Technology' },
+    { value: 'HEALTHCARE',     label: 'Healthcare' },
+    { value: 'FINANCE',        label: 'Finance' },
+    { value: 'EDUCATION',      label: 'Education' },
+    { value: 'MANUFACTURING',  label: 'Manufacturing' },
+  ];
 
   registrationForm = new FormGroup({
     company: new FormGroup({
@@ -47,7 +69,7 @@ export class SignUpComponent {
     }, { validators: this.passwordMatchValidator }),
   });
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private elementRef: ElementRef) {}
 
   // ─── Form ────────────────────────────────────────────────────────────────
 
@@ -57,8 +79,16 @@ export class SignUpComponent {
 
     this.isLoading.set(true);
     this.authService.signUp(this.buildFormData()).subscribe({
-      next:     (response) => { this.userEmail.set(response.email); this.isDialogOpen.set(true); },
-      error:    (err: HttpErrorResponse) => { this.errorMessage.set(err.error.message); this.isLoading.set(false); },
+      next: (response) => { this.userEmail.set(response.email); this.isDialogOpen.set(true); },
+      error: (err: HttpErrorResponse) => {
+        if (err.error.statusCode === 409) {
+            this.errorMessage.set('Email already exists. Please try with a different email. ')
+        } else {
+          this.dialogState = 'server_error';
+          this.dialogVisible = true;
+        }
+        this.isLoading.set(false); 
+      },
       complete: () => { this.isLoading.set(false); this.registrationForm.reset(); },
     });
   }
@@ -72,6 +102,11 @@ export class SignUpComponent {
     const password        = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
     return password === confirmPassword ? null : { passwordMismatch: true };
+  }
+
+  onRetry(): void {
+    // Form values are preserved so the user can resubmit immediately
+    this.dialogVisible = false;
   }
 
   private buildFormData(): FormData {
@@ -136,6 +171,76 @@ export class SignUpComponent {
 
   togglePassword() {
     this.showPassword.update(v => !v);
+  }
+
+  // ─── Industry dropdown ───────────────────────────────────────────────────
+
+  get selectedIndustry(): IndustryOption | null {
+    const value = this.registrationForm.get(['company', 'industry'])?.value;
+    return this.industryOptions.find(o => o.value === value) ?? null;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (this.isIndustryOpen && !this.elementRef.nativeElement.contains(event.target)) {
+      this.closeIndustryDropdown();
+    }
+  }
+
+  toggleIndustryDropdown(): void {
+    this.isIndustryOpen ? this.closeIndustryDropdown() : this.openIndustryDropdown();
+  }
+
+  openIndustryDropdown(): void {
+    this.isIndustryOpen = true;
+    const current = this.selectedIndustry;
+    this.industryFocusedIndex = current
+      ? this.industryOptions.findIndex(o => o.value === current.value)
+      : 0;
+  }
+
+  closeIndustryDropdown(): void {
+    this.isIndustryOpen = false;
+    this.registrationForm.get(['company', 'industry'])?.markAsTouched();
+  }
+
+  selectIndustry(option: IndustryOption, event?: MouseEvent): void {
+    event?.stopPropagation();
+    this.registrationForm.get(['company', 'industry'])?.setValue(option.value);
+    this.closeIndustryDropdown();
+  }
+
+  onIndustryKeydown(event: KeyboardEvent): void {
+    if (!this.isIndustryOpen) {
+      if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        this.openIndustryDropdown();
+      }
+      return;
+    }
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        this.industryFocusedIndex = Math.min(this.industryFocusedIndex + 1, this.industryOptions.length - 1);
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.industryFocusedIndex = Math.max(this.industryFocusedIndex - 1, 0);
+        break;
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        if (this.industryFocusedIndex >= 0) this.selectIndustry(this.industryOptions[this.industryFocusedIndex]);
+        break;
+      case 'Escape':
+        event.preventDefault();
+        this.closeIndustryDropdown();
+        break;
+      case 'Tab':
+        this.closeIndustryDropdown();
+        break;
+    }
   }
 
   // ─── Intersection Observer ───────────────────────────────────────────────

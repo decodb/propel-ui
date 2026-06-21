@@ -1,3 +1,11 @@
+<app-server-error-dialog
+  [visible]="dialogVisible"
+  [state]="dialogState"
+  [redirectAfter]="5"
+  (closed)="dialogVisible = false"
+  (retryRequested)="onRetry()">
+</app-server-error-dialog>
+
 @if(isDialogOpen() && userEmail()) {
     <div class="backdrop"></div>
     <dialog open>
@@ -83,11 +91,48 @@
                         </div>
                         <div class="field" [class.scaledIn]="companyFields.industry">
                             <label for="industry">Industry <span>*</span></label>
-                            <div class="input">
-                                <input id="industry" type="text" placeholder="IT and Software" formControlName="industry">
+
+                            <div
+                                id="industry"
+                                class="industry-select"
+                                [class.open]="isIndustryOpen"
+                                [class.invalid]="hasError(['company', 'industry'], 'required')"
+                                tabindex="0"
+                                role="combobox"
+                                aria-haspopup="listbox"
+                                [attr.aria-expanded]="isIndustryOpen"
+                                (click)="toggleIndustryDropdown()"
+                                (keydown)="onIndustryKeydown($event)"
+                            >
+                                <span class="value" [class.placeholder]="!selectedIndustry">
+                                    {{ selectedIndustry ? selectedIndustry.label : 'Select an industry' }}
+                                </span>
+
+                                <svg class="chevron" [class.flipped]="isIndustryOpen" viewBox="0 0 12 8" fill="none">
+                                    <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+
+                                @if (isIndustryOpen) {
+                                    <ul class="options" role="listbox">
+                                        @for (option of industryOptions; track option.value; let i = $index) {
+                                            <li
+                                                role="option"
+                                                [class.focused]="i === industryFocusedIndex"
+                                                [class.selected]="selectedIndustry?.value === option.value"
+                                                [attr.aria-selected]="selectedIndustry?.value === option.value"
+                                                (mouseenter)="industryFocusedIndex = i"
+                                                (click)="selectIndustry(option)"
+                                            >
+                                                <span class="dot"></span>
+                                                {{ option.label }}
+                                            </li>
+                                        }
+                                    </ul>
+                                }
                             </div>
+
                             @if (hasError(['company', 'industry'], 'required')) {
-                                <p class="error">Industry is required <p>
+                                <p class="error">Industry is required</p>
                             }
                         </div>
                     </div>
