@@ -1,4 +1,4 @@
-@use '../../../../styles/index' as *;
+@use '../../../../../styles/index' as *;
 @use "sass:color";
 
 main {
@@ -194,6 +194,7 @@ main {
 
                         img {
                             width: 10%;
+                            border-radius: 50%;
                         }
                     }
 
@@ -201,12 +202,28 @@ main {
                         display: flex;
                         align-items: center;
                         gap: 0.5rem;
+
                         .dot {
                             width: 5px;
                             height: 5px;
                             border-radius: 50%;
-                            background-color: aquamarine;
+                            
+                            &.pending {
+                                background-color: $color-warning;
+                            }
+
+                            &.approved {
+                                background-color: $color-success;
+                            }
+
+                            &.rejected {
+                                background-color: $color-error;
+                            }
                         }
+                    }
+
+                    .more_details {
+                        cursor: pointer;
                     }
                 }
             }
@@ -224,6 +241,20 @@ main {
             .backward,
             .forward {
                 cursor: pointer;
+                background: transparent;
+                border: none; // buttons have a default border/background from the browser — strip both so "transparent" actually looks transparent
+
+                ion-icon {
+                    color: $color-surface;
+                }
+
+                &:disabled {
+                    padding: 0.5rem;
+                    cursor: not-allowed;
+                    opacity: 0.4;
+                    pointer-events: none;
+                    background: transparent;
+                }
             }
 
             .pages {
@@ -237,10 +268,8 @@ main {
                     gap: 0.5rem;
 
                     span {
-                        background-color: $color-background;
                         padding: 0.5rem 1rem;
                         border-radius: 10px;
-                        cursor: pointer;
 
                         &.active {
                             background-color: $color-primary-light;
