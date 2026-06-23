@@ -1,0 +1,253 @@
+@use '../../../../styles/index' as *;
+@use "sass:color";
+
+main {
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .search_bar {
+            background-color: $color-primary-dark;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 1rem;
+            border-radius: 10px;
+
+            ion-icon {
+                font-size: 1.5rem;
+            }
+
+            input {
+                padding: 0.5rem;
+            }
+
+            .btn {
+                all: unset;
+                background-color: transparent;
+                cursor: pointer;
+                font-size: 0.85rem;
+                font-weight: 400;
+            }
+        }
+
+        .icons {
+            background-color: $color-primary-dark;
+
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            padding: 0.35rem 0.75rem;
+            border-radius: 10px;
+            
+            .icon {
+                font-size: 1.25rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .summary {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+
+        h3 {
+            font-weight: 500;
+        }
+
+        p {
+            font-size: 0.85rem;
+            color: $color-muted;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            
+            .card {
+                background:
+                    linear-gradient(
+                        180deg,
+                        rgba($color-primary-dark, 0.96),
+                        rgba(color.mix($color-primary, $color-primary-dark, 8%), 0.99) 48%,
+                        $color-background
+                    ),
+                    repeating-linear-gradient(
+                        90deg,
+                        rgba($color-primary, 0.02) 0,
+                        rgba($color-primary, 0.02) 1px,
+                        transparent 1px,
+                        transparent 92px
+                    );
+                padding: 0.5rem 1rem;
+                border-radius: 10px;
+
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+        }
+    }
+
+    .companies {
+        background-color: $color-primary-dark;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .options {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+
+                .option {
+                    font-size: 0.75rem;
+                    background-color: #1A171D;
+                    padding: 0.5rem 1rem;
+                    border-radius: 10px;
+
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .data {
+            
+            .table_header {
+                display: grid;
+                grid-template-columns: 1.5fr repeat(4, 1fr);
+
+                span {
+                    color: $color-muted;
+                    font-size: 0.85rem;
+                }
+            }
+
+            .table_rows {
+                height: 27.5vh;
+                overflow-y: auto;
+
+                /* Chrome, Edge, Safari */
+                &::-webkit-scrollbar {
+                    width: 6px;
+                }
+
+                &::-webkit-scrollbar-track {
+                    background: rgba(255, 255, 255, 0.03);
+                    border-radius: 999px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background: rgba($color-primary, 0.45);
+                    border-radius: 999px;
+                    transition: background 0.2s ease;
+                }
+
+                &::-webkit-scrollbar-thumb:hover {
+                    background: rgba($color-primary, 0.7);
+                }
+
+                /* Firefox */
+                scrollbar-width: thin;
+                scrollbar-color: rgba(144, 70, 255, 0.45) transparent;
+
+                .row {
+                    padding: 0.75rem 0;
+
+                    display: grid;
+                    align-items: center;
+                    grid-template-columns: 1.5fr repeat(4, 1fr);
+
+                    border-bottom: 0.1px solid $color-muted;
+
+                    span {
+                        font-size: 0.85rem;
+                    }
+
+                    .name {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+
+                        img {
+                            width: 10%;
+                        }
+                    }
+
+                    .status {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        .dot {
+                            width: 5px;
+                            height: 5px;
+                            border-radius: 50%;
+                            background-color: aquamarine;
+                        }
+                    }
+                }
+            }
+        }
+        
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            span {
+                font-size: 0.85rem;
+            }
+
+            .backward,
+            .forward {
+                cursor: pointer;
+            }
+
+            .pages {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+
+                .numbers {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+
+                    span {
+                        background-color: $color-background;
+                        padding: 0.5rem 1rem;
+                        border-radius: 10px;
+                        cursor: pointer;
+
+                        &.active {
+                            background-color: $color-primary-light;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,1 +1,150 @@
-<p>dashboard works!</p>
+<main>
+    <div class="header">
+        <div class="search_bar">
+            <ion-icon name="search-outline"></ion-icon>
+            <input type="text" placeholder="search company....">
+            <button class="btn">Search</button>
+        </div>
+        <div class="icons">
+            <div class="icon"><ion-icon name="notifications-outline"></ion-icon></div>
+            <div class="icon"><ion-icon name="chatbubble-outline"></ion-icon></div>
+            <div class="icon"><ion-icon name="settings-outline"></ion-icon></div>
+        </div>
+    </div>
+    <div class="summary">
+        <h3>Dashboard</h3>
+        <p>Here are companies registered with us. </p>
+        <div class="cards">
+            <div class="card">
+                <span>Total Companies</span>
+                <span>58</span>
+                <span>-</span>
+            </div>
+            <div class="card">
+                <span>Pending</span>
+                <span>10</span>
+                <span>-</span>
+            </div>
+            <div class="card">
+                <span>Accepted</span>
+                <span>40</span>
+                <span>-</span>
+            </div>
+            <div class="card">
+                <span>Rejected / Unverified</span>
+                <span>8</span>
+                <span>-</span>
+            </div>
+        </div>
+    </div>
+    <div class="companies">
+        <div class="nav">
+            <h4>Companies</h4>
+            <div class="options">
+                <div class="option">
+                    <ion-icon name="swap-vertical-outline"></ion-icon>
+                    <span>Sort: None</span>
+                </div>
+                <div class="option">
+                    <ion-icon name="options-outline"></ion-icon>
+                    <span>Filter: None</span>
+                </div>
+            </div>
+        </div>
+        <div class="data">
+            <div class="table_header">
+                <span>Name</span>
+                <span>Industry</span>
+                <span>Status</span>
+                <span>Submitted At</span>
+                <span>More Details</span>
+            </div>
+            <div class="table_rows">
+                <div class="row">
+                    <div class="name">
+                        <img src="assets/images/user.png" alt="">
+                        <span>Mkhwanazi Software</span>
+                    </div>
+                    <span>Technology</span>
+                    <div class="status">
+                        <div class="dot"></div>
+                        <span>Pending</span>
+                    </div>
+                    <span>19-06-2026</span>
+                    <div class="more_details"><ion-icon name="file-tray-full-outline"></ion-icon></div>
+                </div>
+                <div class="row">
+                    <div class="name">
+                        <img src="assets/images/user.png" alt="">
+                        <span>Mkhwanazi Software</span>
+                    </div>
+                    <span>Technology</span>
+                    <div class="status">
+                        <div class="dot"></div>
+                        <span>Pending</span>
+                    </div>
+                    <span>19-06-2026</span>
+                    <div class="more_details"><ion-icon name="file-tray-full-outline"></ion-icon></div>
+                </div>
+                <div class="row">
+                    <div class="name">
+                        <img src="assets/images/user.png" alt="">
+                        <span>Mkhwanazi Software</span>
+                    </div>
+                    <span>Technology</span>
+                    <div class="status">
+                        <div class="dot"></div>
+                        <span>Pending</span>
+                    </div>
+                    <span>19-06-2026</span>
+                    <div class="more_details"><ion-icon name="file-tray-full-outline"></ion-icon></div>
+                </div>
+                <div class="row">
+                    <div class="name">
+                        <img src="assets/images/user.png" alt="">
+                        <span>Mkhwanazi Software</span>
+                    </div>
+                    <span>Technology</span>
+                    <div class="status">
+                        <div class="dot"></div>
+                        <span>Pending</span>
+                    </div>
+                    <span>19-06-2026</span>
+                    <div class="more_details"><ion-icon name="file-tray-full-outline"></ion-icon></div>
+                </div>
+                <div class="row">
+                    <div class="name">
+                        <img src="assets/images/user.png" alt="">
+                        <span>Mkhwanazi Software</span>
+                    </div>
+                    <span>Technology</span>
+                    <div class="status">
+                        <div class="dot"></div>
+                        <span>Pending</span>
+                    </div>
+                    <span>19-06-2026</span>
+                    <div class="more_details"><ion-icon name="file-tray-full-outline"></ion-icon></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <span>Total Companies: 100</span>
+            <div class="pages">
+                <div class="backward">
+                    <ion-icon name="chevron-back-outline"></ion-icon>
+                </div>
+                <div class="numbers">
+                    <span [class.active]="page === 1">1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                </div>
+                <div class="forward">
+                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                </div>
+            </div>
+            <span>Show Per Page: 10</span>
+        </div>
+    </div>
+</main>
